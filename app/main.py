@@ -1,5 +1,6 @@
 import asyncio
 from aiogram import Bot, Dispatcher
+from loaders import load_initial_data
 from middleware import AntiThrottlingMiddleware
 from config import settings
 from database import database
@@ -13,6 +14,7 @@ async def main():
     dp.include_router(router)
 
     await database.connect()
+    await load_initial_data()
     try:
         await dp.start_polling(bot)
     finally:

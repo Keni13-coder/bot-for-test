@@ -42,7 +42,7 @@
 1. **Клонирование репозитория:**
     ```sh
     git clone https://github.com/Keni13-coder/bot-for-test.git
-    cd telegram-salary-aggregation-bot
+    cd bot-for-test
     ```
 
 2. **Создание файла `.env` с вашим токеном бота и URI MongoDB:**

@@ -57,7 +57,7 @@ def get_group_stage(group_type: str):
     elif group_type == 'month':
         return {
             "$dateToString": {
-                "format": "%Y-%m-%dT00:00:00",
-                "date": {"$dateFromString": {"dateString": "$dt", "format": "%Y-%m-01T00:00:00"}}
+                "format": "%Y-%m-01T00:00:00",
+                "date": "$dt"
             }
         }
