@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+    depends_on:
+      - mongodb
+        # condition: service_healthy
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./data/sample_collection.bson:/docker-entrypoint-initdb.d/sample_collection.bson
+    command: bash -c "
+      mongod --fork --logpath /var/log/mongodb.log --logappend;
+      mongorestore --db ${mongo_db} --collection salaries /docker-entrypoint-initdb.d/sample_collection.bson;
+      mongod --shutdown;
+      mongod --bind_ip_all"
+    # healthcheck:
+    #   test: "mongo --eval 'db.adminCommand('ping')' || exit 1"
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+
+volumes:
+  mongo-data:
